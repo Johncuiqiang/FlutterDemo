@@ -37,6 +37,7 @@ class _HomePageState extends State<HomePage> {
       height: 700,
       width: 750,
       child: Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: AppBar(title: Text('首页')),
           body: FutureBuilder(
             future: getHomePageData(),
@@ -61,8 +62,7 @@ class _HomePageState extends State<HomePage> {
                 return Center(
                     child: Text('加载数据',
                         style: TextStyle(
-                            fontSize: ScreenUtil(allowFontScaling: false)
-                                .setSp(28))));
+                            fontSize: 28)));
               }
             },
           )),
@@ -79,7 +79,7 @@ class SwipeDiy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 240,
+      height: 200,
       child: Swiper(
         itemBuilder: (BuildContext context, int index) {
           return Image.network("${swipeDataList[index]['image']}",
@@ -107,7 +107,7 @@ class TopNavigator extends StatelessWidget {
       },
       child: Column(
         children: [
-          Image.network(item['image'], width: ScreenUtil().setWidth(95)),
+          Image.network(item['image'], width: 80),
           Text(item['name'])
         ],
       ),
@@ -120,8 +120,8 @@ class TopNavigator extends StatelessWidget {
       navigatorList.removeRange(12, navigatorList.length);
     }
     return Container(
-      height: 150,
-      margin: EdgeInsets.only(top: 10.0),
+      height: 200,
+      margin: EdgeInsets.only(top: 20.0),
       padding: EdgeInsets.all(3.0),
       child: GridView.count(
         crossAxisCount: 5,
@@ -157,8 +157,8 @@ class GoodsRecommend extends StatelessWidget {
           Application.router.navigateTo(context,"/detail?id=${index}");
       },
       child: Container(
-        height: 300,
-        width: 150,
+        height: 150,
+        width: 100,
         padding: EdgeInsets.fromLTRB(8, 25, 8, 8),
         decoration: BoxDecoration(
             color: Colors.white,
@@ -166,7 +166,7 @@ class GoodsRecommend extends StatelessWidget {
                 Border(left: BorderSide(width: 0.5, color: Colors.black12))),
         child: Column(
           children: [
-            Image.network(item['image'], width: ScreenUtil().setWidth(150)),
+            Image.network(item['image'], width: 100),
             Container(
                 margin: EdgeInsets.only(top: 10.0),
                 child: Text(
@@ -227,8 +227,8 @@ class GoodsRecommend2 extends StatelessWidget {
 
       },
       child: Container(
-        height: 150,
-        width: 150,
+        height: 100,
+        width: 100,
         padding: EdgeInsets.fromLTRB(8, 25, 8, 8),
         decoration: BoxDecoration(
             color: Colors.white,
@@ -236,7 +236,7 @@ class GoodsRecommend2 extends StatelessWidget {
                 Border(left: BorderSide(width: 0.5, color: Colors.black12))),
         child: Column(
           children: [
-            Image.network(item['image'], width: ScreenUtil().setWidth(150)),
+            Image.network(item['image'], width: 100),
             Container(
                 margin: EdgeInsets.only(top: 10.0),
                 child: Text(

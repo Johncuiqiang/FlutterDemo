@@ -53,7 +53,6 @@ class _IndexPageState extends State<IndexPage> {
 
   @override
   Widget build(BuildContext context) {
-     ScreenUtil.instance = ScreenUtil()..init(context);
      return Scaffold(
             backgroundColor: Color.fromRGBO(244, 245, 245, 1.0),
             bottomNavigationBar: BottomNavigationBar(
