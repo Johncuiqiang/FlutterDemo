@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:untitled/page/index_page.dart';
+import 'package:fluro/fluro.dart';
+import 'package:untitled/router/application.dart';
+
+import 'router/router.dart';
 
 void main() {
+  final router = FluroRouter();
+  Routes.configureRoutes(router);
+  Application.router = router;
   runApp(const MyApp());
 }
 
@@ -16,6 +23,7 @@ class MyApp extends StatelessWidget {
       child:  MaterialApp(
          title: '商城',
          debugShowCheckedModeBanner: false,
+         onGenerateRoute: Application.router.generator,
          theme:ThemeData(
             primaryColor: Colors.blue,
          ),
