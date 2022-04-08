@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../data/service_method.dart';
 
 class CartPage extends StatefulWidget {
@@ -12,14 +13,66 @@ class CartPage extends StatefulWidget {
 
 class CartPageState extends State<CartPage> {
 
+  String homePageContent = '正在获取数据';
+
+  @override
+  void initState() {
+    getHomePageData().then((value) {
+      setState(() {
+        homePageContent = value.toString();
+      });
+    });
+    super.initState();
+  }
+
+  Widget _gridViewItemUI(BuildContext context,item) {
+    return InkWell(
+        onTap: () {
+          print('点击了导航');
+        },
+        //FittedBox是为了解决溢出像素的问题，子view大于父view
+        child: FittedBox (
+          child: Column(
+            children: [
+              Image.network(item['image'], width: 60,fit: BoxFit.fill),
+              Text(item['name'])
+            ],
+          ),
+        )
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-
-     return Center(
-         child: Text('CartPage')
-     );
+    if('正在获取数据' == homePageContent) {
+      return Center(child: Text(homePageContent));
+    } else {
+      var data = json.decode(homePageContent);
+      List<Map> gridList = (data['data']['type'] as List).cast();
+      List<Map> goodsList = (data['data']['recommend'] as List).cast();
+      return NestedScrollView(
+        body: GridView.count(
+          crossAxisCount: 5,
+          mainAxisSpacing: 12,
+          childAspectRatio: 1.0,
+          children: gridList
+              .map((item) => _gridViewItemUI(context, item))
+              .toList(),
+        ),
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverAppBar(
+              title: const Text('嵌套ListView'),
+              pinned: true, // 固定在顶部
+              forceElevated: innerBoxIsScrolled,
+            ),
+          ];
+        },
+      );
+    }
   }
 }
+
 
 // import 'package:flutter/foundation.dart';
 // import 'package:flutter/material.dart';

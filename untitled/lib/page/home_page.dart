@@ -33,7 +33,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     //出初始化设计尺寸
     return Scaffold(
-          resizeToAvoidBottomInset: false,
           appBar: AppBar(title: Text('首页')),
           body: FutureBuilder(
             future: getHomePageData(),
@@ -115,22 +114,15 @@ class TopNavigator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (navigatorList.length > 12) {
-      navigatorList.removeRange(12, navigatorList.length);
-    }
     return Container(
-      constraints: BoxConstraints(
-         maxHeight: 180
-      ),
-      margin: EdgeInsets.only(top: 20.0),
-      padding: EdgeInsets.all(3.0),
-      child: GridView.count(
-        crossAxisCount: 5,
-        mainAxisSpacing: 12,
-        children: navigatorList
-            .map((item) => _gridViewItemUI(context, item))
-            .toList(),
-      ),
+        margin: EdgeInsets.only(top: 15.0),
+        child: GridView.count(
+            shrinkWrap: true,
+            crossAxisCount: 5,
+            mainAxisSpacing: 12,
+            children: navigatorList
+               .map((item) => _gridViewItemUI(context, item))
+               .toList()),
     );
   }
 }
@@ -258,6 +250,7 @@ class GoodsRecommend2 extends StatelessWidget {
   Widget _goodsList(BuildContext context) {
     return Expanded(
       child: ListView.builder(
+        shrinkWrap: true,
         scrollDirection: Axis.vertical,
         itemCount: goodsRecommendList.length,
         physics: NeverScrollableScrollPhysics(),
@@ -271,7 +264,6 @@ class GoodsRecommend2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height:800,
       margin: EdgeInsets.only(top: 10.0),
       child: Row(
         children: [
