@@ -151,8 +151,6 @@ class GoodsRecommend extends StatelessWidget {
           Application.router.navigateTo(context,"/detail?id=${index}");
       },
       child: Container(
-        height: 150,
-        width: 100,
         padding: EdgeInsets.fromLTRB(8, 25, 8, 8),
         decoration: BoxDecoration(
             color: Colors.white,

@@ -45,7 +45,7 @@ class _CategoryPageState extends State<CategoryPage>  {
         child: GoodsRecommend2(goodsRecommendList:goodsList),
         onLoad: () async {
           print('开始加载更多');
-          if (page <= 10) {
+          if (page <= 15) {
             setState(() {
               Map map = new Map();
               map.putIfAbsent('price', () =>'新价格');

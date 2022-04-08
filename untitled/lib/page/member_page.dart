@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
@@ -16,6 +17,8 @@ class MemberPageState extends State<MemberPage> {
 
   // 条目总数
   int _count = 20;
+  // 这种解决方案不好，要在很多方案维护这个变量
+  bool _isNoMore = false;
 
   @override
   void initState() {
@@ -33,26 +36,36 @@ class MemberPageState extends State<MemberPage> {
         enableControlFinishRefresh: false,
         enableControlFinishLoad: true,
         controller: _controller,
-      //  header: ClassicalHeader(),
-      //  footer: ClassicalFooter(),
+        header: ClassicalHeader(),
+        //footer: _count >= 40 ? NoMoreFooter() : ClassicalFooter(),
+        footer: ClassicalFooter(noMoreText: '已经到底了~'),
         onRefresh: () async {
           await Future.delayed(Duration(seconds: 1), () {
             print('onRefresh');
             setState(() {
               _count = 20;
+              _isNoMore = false;
             });
             _controller.resetLoadState();
           });
         },
-        onLoad: () async {
+        onLoad: !_isNoMore ? () async {
           await Future.delayed(Duration(seconds: 1), () {
             print('onLoad');
             setState(() {
               _count += 10;
             });
-           // _controller.finishLoad(noMore: _count >= 40);
+            _controller.finishLoad(noMore: _count >= 40);
+            if(_count >= 40) {
+              //解决底部footer显示不回弹的问题，这种延时解决是否是最好的方案
+              Future.delayed(Duration(seconds: 2), () {
+                setState(() {
+                  _isNoMore= true;
+                });
+              });
+            }
           });
-        },
+        }:null,
         slivers: <Widget>[
           SliverList(
             delegate: SliverChildBuilderDelegate(
@@ -84,6 +97,15 @@ class MemberPageState extends State<MemberPage> {
               },
               child: Text("Load more", style: TextStyle(color: Colors.black))),
         ]);
+  }
+
+}
+
+class NoMoreFooter extends Footer {
+
+  @override
+  Widget contentBuilder(BuildContext context, LoadMode loadState, double pulledExtent, double loadTriggerPullDistance, double loadIndicatorExtent, AxisDirection axisDirection, bool float, Duration? completeDuration, bool enableInfiniteLoad, bool success, bool noMore) {
+     return Center(child: Text('没有更多了'));
   }
 
 }
