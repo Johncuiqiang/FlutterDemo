@@ -32,11 +32,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     //出初始化设计尺寸
-
-    return Container(
-      height: 700,
-      width: 750,
-      child: Scaffold(
+    return Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(title: Text('首页')),
           body: FutureBuilder(
@@ -65,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                             fontSize: 28)));
               }
             },
-          )),
+          ),
     );
   }
 }
@@ -79,7 +75,7 @@ class SwipeDiy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200,
+      height: 230,
       child: Swiper(
         itemBuilder: (BuildContext context, int index) {
           return Image.network("${swipeDataList[index]['image']}",
@@ -105,12 +101,15 @@ class TopNavigator extends StatelessWidget {
         print('点击了导航');
         Fluttertoast.showToast(msg: '点击了导航');
       },
-      child: Column(
-        children: [
-          Image.network(item['image'], width: 80),
-          Text(item['name'])
-        ],
-      ),
+      //FittedBox是为了解决溢出像素的问题，子view大于父view
+      child: FittedBox (
+        child: Column(
+          children: [
+              Image.network(item['image'], width: 60,fit: BoxFit.fill,),
+              Text(item['name'])
+          ],
+        ),
+      )
     );
   }
 
@@ -120,11 +119,14 @@ class TopNavigator extends StatelessWidget {
       navigatorList.removeRange(12, navigatorList.length);
     }
     return Container(
-      height: 200,
+      constraints: BoxConstraints(
+         maxHeight: 180
+      ),
       margin: EdgeInsets.only(top: 20.0),
       padding: EdgeInsets.all(3.0),
       child: GridView.count(
         crossAxisCount: 5,
+        mainAxisSpacing: 12,
         children: navigatorList
             .map((item) => _gridViewItemUI(context, item))
             .toList(),
@@ -164,18 +166,20 @@ class GoodsRecommend extends StatelessWidget {
             color: Colors.white,
             border:
                 Border(left: BorderSide(width: 0.5, color: Colors.black12))),
-        child: Column(
-          children: [
-            Image.network(item['image'], width: 100),
-            Container(
-                margin: EdgeInsets.only(top: 10.0),
-                child: Text(
-                  '${item['price']}元',
-                  style: TextStyle(color: Colors.blue),
-                  maxLines: 1,
-                ))
-          ],
-        ),
+        child: FittedBox(
+          child: Column(
+            children: [
+              Image.network(item['image'], width: 100),
+              Container(
+                  margin: EdgeInsets.only(top: 10.0),
+                  child: Text(
+                    '${item['price']}元',
+                    style: TextStyle(color: Colors.blue),
+                    maxLines: 1,
+                  ))
+            ],
+          ),
+        )
       ),
     );
   }
@@ -234,19 +238,20 @@ class GoodsRecommend2 extends StatelessWidget {
             color: Colors.white,
             border:
                 Border(left: BorderSide(width: 0.5, color: Colors.black12))),
-        child: Column(
-          children: [
-            Image.network(item['image'], width: 100),
-            Container(
-                margin: EdgeInsets.only(top: 10.0),
-                child: Text(
-                  '${item['price']}元',
-                  style: TextStyle(color: Colors.blue),
-                  maxLines: 1,
-                ))
-          ],
-        ),
-      ),
+          child: FittedBox(
+            child: Column(
+              children: [
+                Image.network(item['image'], width: 100),
+                Container(
+                    margin: EdgeInsets.only(top: 10.0),
+                    child: Text(
+                      '${item['price']}元',
+                      style: TextStyle(color: Colors.blue),
+                      maxLines: 1,
+                    ))
+              ],
+            ),
+          )),
     );
   }
 
