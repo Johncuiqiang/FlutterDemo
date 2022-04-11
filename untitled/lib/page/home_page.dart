@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
   State<StatefulWidget> createState() => _HomePageState();
 }
 
-//AutomaticKeepAliveClientMixi保持页面状态不会每次都重新加载请求数据
+
 class _HomePageState extends State<HomePage> {
   String homePageContent = '正在获取数据';
 
